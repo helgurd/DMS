@@ -1,0 +1,206 @@
+
+{% load static %}
+	<head>
+		
+		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+		
+		<link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+		<meta charset="utf-8">
+		<title>All files</title>	
+	</head>
+
+	<body>
+	<div class="container">
+		<!-- List of uploaded documents -->
+		<div class="jumbotron">
+			<h1>All files</h1>
+		</div>
+
+	<form align="right" name="form1" method="get" action="/login/logout/">
+	{{ usersession }}
+  <label class="logoutLblPos">
+  <input  type="submit"  value="Logout">
+  </label>
+</form>
+		<div class="row">
+		<ul class="list-group">
+		{% for file in fileupload_list %}
+			<div class="col-sm-5">
+			<p>
+			<li class="list-group-item">
+				<a class="modalButton" data-toggle="modal"
+				data-src="{% url "upload_file" file %}" 
+				data-target="#myModal">
+				{{ file }}
+				</a>
+				<a class="deleteButton" href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+			</li>
+			</p>
+			</div>
+		
+		{% endfor %}
+		</ul>
+		</div>
+		<!--  BootStrap Modal for popup -->
+
+	<div class="modal fade" id="myModal"  tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" >
+         <div class="modal-content" >
+            <div class="modal-header">
+                <button id="modalClose" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+           </div>
+         <div class="modal-body">
+         	<center>
+            <iframe frameborder="0"></iframe>
+            </center>
+         </div>
+         <div class="modal-footer">
+		 
+         <button id="propButton" type="button" class="btn btn-default">Properties</button>
+         <button id="butDelete" type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" ></span>&nbsp;Delete file</button> 
+            <button  type="button" class="btn btn-default" ><a class="dwnld" download><span class="glyphicon glyphicon-download-alt"></span>&nbsp;Download</a></button>
+         
+         
+         <button id="butClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+         </div>
+        </div><!-- /.modal-content -->
+     </div><!-- /.modal-dialog -->
+
+<div id="myPropertiesModal" class="modal fade"  role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-toggle="modal" id="propClose">&times;</button>
+        <h4 class="modal-title">File Properties.</h4>
+      </div>
+      <div class="modal-body">
+        <center><iframe frameborder="0" id="proBody"></iframe></center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-toggle="modal" id="propClose2">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+  	</div><!-- /.modal -->
+
+
+
+		<div  class="input-group">
+		<form action="{% url "file_uploading" %}" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			<p>{{ form.non_field_errors }}</p>
+			<p>{{ form.file.label_tag }} {{ form.file.help_text }}</p>
+			<p>
+				{{ form.file.errors }}
+				<a class='btn btn-primary'>{{ form.file }}</a>
+			</p>
+			<button class="btn btn-default btn-sm" type="submit">Upload</button>
+		</form>
+		</div>
+	
+	
+	
+	</div>
+
+
+	</body>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    
+    <!-- <script src="{% static 'js/angular.min.js' %}"></script> -->
+    <script src="{% static 'js/moment.js' %}"></script>
+    <script type="text/javascript">
+    var sourcefordelete='';
+    var type_file='';
+ 		$('a.modalButton').on('click', function(e) {
+    		var src = $(this).attr('data-src');
+    		sourcefordelete = src;
+    		var height = $(this).attr('data-height') || 500;
+    		var width = $(this).attr('data-width') || 800;
+    		// var width = 800;
+		    var res = src.replace("/file/", "/download/")
+
+		    // alert(res);
+    		$("#myModal iframe").attr({'src':src,
+                        'height': height,
+                        'width': width});
+    		$("#myModal a.dwnld").attr({
+    			'href':res
+    		});
+    		var name = src.split("/");
+
+    		var x = name[name.length-1]
+    		// extracting filetype
+    		var xx = x.split(".");
+    		type_file=xx[xx.length-1];
+    		// alert(sourcefordelete);
+    		// end
+    		$('#myModalLabel').html(x);
+    		$('#myModal').attr({'data-keyboard': false,'data-backdrop': 'static'});
+
+		});
+ 	// 	$('#butDownload').on('click', function(){
+		// 	var src = $("#myModal iframe").attr('src');
+		// 	var res = src.replace("/file/", "/download/")
+		//     window.location.href=res;			
+			
+		// });
+
+		$('#butDelete').on('click', function(){
+			var chk = confirm('Click Ok to confirm delete.');
+			if(chk == true){
+				var src = $("#myModal iframe").attr('src');
+		    	var del = src.replace("/file/", "/delete/");
+		    	window.location.href=del;			
+			}
+		});
+ 		$('a.deleteButton').on('click', function(e) {
+ 			var chk = confirm('Click Ok to confirm delete.');
+			if(chk == true){
+				var src = $("a.modalButton").attr('data-src');
+		    	var del = src.replace("/file/", "/delete/");
+		    	window.location.href=del;			
+			}
+		});		
+		// $('#myModal').on('hidden.bs.modal', function () {
+		// 	var src = $("#myModal iframe").attr('src');
+		// 	var res = src.replace("/file/", "/cleartemp/")
+  // 			$('#myModal iframe').attr({'src':res});
+		// });
+ 		$('#propButton').on('click', function(){
+			$('#myPropertiesModal').modal('show');
+				var src = $("#myModal iframe").attr('src');
+		    	var pro = sourcefordelete.replace("/file/", "/properties/");
+		  //   	// window.location.href=pro;			
+			$('#proBody').attr({'src':pro,'height':300, 'width':300});
+		});
+		$('#propClose').on('click', function(){
+			$('#myPropertiesModal').modal('hide');
+			// $('#myModal').modal('show');
+		});
+		$('#propClose2').on('click', function(){
+			$('#myPropertiesModal').modal('hide');
+			// $('#myModal').modal('show');
+		});
+
+
+		$('#modalClose').on('click',function(){
+			var src = $("#myModal iframe").attr('src');
+			var res = src.replace("/file/", "/cleartemp/")
+  			$('#myModal iframe').attr({'src':res});
+		});
+		$('#butClose').on('click',function(){
+			var src = $("#myModal iframe").attr('src');
+			var res = src.replace("/file/", "/cleartemp/")
+  			$('#myModal iframe').attr({'src':res});
+		});
+		
+	</script>

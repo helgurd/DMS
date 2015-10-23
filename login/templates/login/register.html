@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'signin.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+        <style type="text/css">
+        body{
+    background-color: #525252;
+}
+.centered-form{
+    margin-top: 60px;
+}
+
+.centered-form .panel{
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
+}
+</style>
+        <title>Register</title>
+    </head>
+
+    <body>
+        
+
+        
+        <div class="container">
+        
+
+        <div class="row centered-form">
+
+        <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                        <h1 class="panel-title">Register</h1>
+                        </div>
+                        <div class="panel-body">
+                        {% if registered %}
+
+        <strong>Thank you for registering!</strong>
+        <a href="/login/go">Return to the login page.</a><br />
+        {% else %}
+                        <form role="form" id="user_form" method="post" action="/login/register/"
+                enctype="multipart/form-data">
+                          {% csrf_token %}
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    {{ user_form.as_p }}
+                                    </div>
+                                    </div>
+
+
+
+                        
+                            
+                            <input type="submit" name="submit" value="Register" class="btn btn-info btn-block">
+                        
+                        </form>
+                        <br>
+                        <input type="button" name="submit" onclick="location.href='/login/go'" value="Goto login" class="btn btn-info btn-block">
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+
+
+    </body>
+</html>

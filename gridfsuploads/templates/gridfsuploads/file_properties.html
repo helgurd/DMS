@@ -1,0 +1,16 @@
+{% load static %}
+	<head>
+		
+		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+		
+		<link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+		<meta charset="utf-8">
+	</head>
+<ul width="2px" class="list-group">
+  <li width="2px"  class="list-group-item"><span class="badge">{{ properties.file_name }}</span>File Name</li>
+  <li class="list-group-item"><span class="badge">{{ properties.file_size }}</span>Size</li> 
+  <li class="list-group-item"><span class="badge">{{ properties.file_type }}</span>Type</li> 
+  <li class="list-group-item"><span class="badge">{{ properties.upload_date }}</span>Creation date</li> 
+  <li class="list-group-item"><span class="badge">{{ properties.owner }}</span>Owner</li> 
+
+</ul>

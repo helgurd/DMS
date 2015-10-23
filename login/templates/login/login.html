@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'signin.css' %}">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+        <title>login</title>
+    </head>
+
+    <body>
+        <div class="container">
+
+      <form class="form-signin" id="login_form" method="post" action="/login/go/">
+       {% csrf_token %}
+       <div class="jumbotron">
+        <center><h1 class="form-signin-heading">Login</h1></center>
+        </div>
+        <label for="username" class="sr-only">Username</label>
+        <input type="text" name="username" class="form-control" placeholder="Username" required autofocus>
+        <label for="username" class="sr-only">Password</label>
+        <input type="password" name="password" class="form-control" placeholder="Password" required>
+        <div class="checkbox">
+          
+        </div><center> <font color="red">{{ msg }}</font> </center>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button><br>
+        
+      </form>
+      <center>
+        <button class="btn btn-lg btn-primary"
+        onclick="location.href='/login/register/'">Goto registration page</button>
+    </div> <!-- /container -->
+</center>
+
+
+
+
+
+    </body>
+</html>
