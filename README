@@ -8,18 +8,27 @@ Openoffice is also a requirement so if you don't have it installed on your syste
 
 https://www.openoffice.org/download/index.html
 
+You should also have git installed on your system, if you don't have it follow this URL-
+
+https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+
 
 Install pip (python package installer) by following below URL-
 https://pip.pypa.io/en/latest/installing/
 
 Installing virtualenv-
-$pip install virtualenv
+$ pip install virtualenv
 
 $virtualenv venv
 (venv-> name of the virtual env inside which app will run)
 
 Activating virtualenv-
-$source myproject/bin/activate
+$ source venv/bin/activate
+
+(you can deactivate the virtualenv later on after you are done seeing the app by typing-> 
+"$ deactivate"-without quotes in you terminal)
+
+$ cd venv
 
 Requirements (will be installed via pip)-
 Django==1.5.11
@@ -41,20 +50,36 @@ wsgiref==0.1.2
 
 $ pip install git+https://github.com/django-nonrel/django@nonrel-1.5 git+https://github.com/django-nonrel/djangotoolbox django-mongodb-engine django-solo djangotoolbox lxml py pymongo pytest pytz six unoconv
 
-**************Now all requirements are met***********
+**************Now that all requirements are met, let us move to running the app***********
 
 Running the App-
 
-copy the provided src folder in your app
+To add app to your virtualenv directory, type the below given command in your terminal/cmd->
 
 now, type below given commands to run the app-
 
-$ python venv/src/manage.py runserver
+$ git clone https://github.com/anmolarora/DMS.git
+
+$ python DMS/manage.py runserver
 (-- venv is name of the virtualenv)
 
+**************All done************
+You will be seeing below message in your terminal-
 
-P.S. If you are still not able to run the app, you can call +918435059313 anytime for any assistance.
+Validating models...
+
+0 errors found
+October 23, 2015 - 14:52:23
+Django version 1.5.11, using settings 'myproject.settings'
+Development server is running at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+
+You can now open your browser and type the address- http://127.0.0.1:8000/ 
+
+Check out the app, and give your reviews @ anmolaroda@yahoo.com
+
+
+P.S. If you are still not able to run the app, you can call +918435059313 or drop an email on anmolaroda@yahoo.com anytime for any assistance.
 
 Regards, 
 Anmol Arora
-
