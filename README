@@ -1,0 +1,60 @@
+Follow the following steps to run the app:-
+
+You should have python already installed in your system (preferably- python 2.7.6).
+If you don't have it installed follow the below url-
+https://www.python.org/downloads/
+
+Openoffice is also a requirement so if you don't have it installed on your system please follow the below URL and download it as per your system-
+
+https://www.openoffice.org/download/index.html
+
+
+Install pip (python package installer) by following below URL-
+https://pip.pypa.io/en/latest/installing/
+
+Installing virtualenv-
+$pip install virtualenv
+
+$virtualenv venv
+(venv-> name of the virtual env inside which app will run)
+
+Activating virtualenv-
+$source myproject/bin/activate
+
+Requirements (will be installed via pip)-
+Django==1.5.11
+argparse==1.2.1
+django-mongodb-engine==0.6.0
+django-solo==1.1.0
+djangotoolbox==1.8.0
+lxml==3.4.4
+py==1.4.22
+pymongo==3.0.3
+pytest==2.6.0
+pytz==2015.6
+six==1.10.0
+unoconv==0.6
+wsgiref==0.1.2
+
+--> for installing the above requirements just type the below command in your terminal/cmd 
+(Remember before doing this you should already have activated the virtualenv as described above)
+
+$ pip install git+https://github.com/django-nonrel/django@nonrel-1.5 git+https://github.com/django-nonrel/djangotoolbox django-mongodb-engine django-solo djangotoolbox lxml py pymongo pytest pytz six unoconv
+
+**************Now all requirements are met***********
+
+Running the App-
+
+copy the provided src folder in your app
+
+now, type below given commands to run the app-
+
+$ python venv/src/manage.py runserver
+(-- venv is name of the virtualenv)
+
+
+P.S. If you are still not able to run the app, you can call +918435059313 anytime for any assistance.
+
+Regards, 
+Anmol Arora
+
