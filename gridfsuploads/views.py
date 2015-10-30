@@ -24,9 +24,11 @@ import pytz
 from pytz import timezone
 from django.contrib.auth import logout
 
+from django.contrib.auth.decorators import login_required
+
 
 if settings.DEBUG:
-
+	@login_required(login_url='/login/go/')  #added after wards to ensure that files are not visible
 	def serve_from_gridfs(request, path):
 		# Serving GridFS files through Django is inefficient and
 		# insecure. NEVER USE IN PRODUCTION!
@@ -114,6 +116,7 @@ if settings.DEBUG:
 
 			return HttpResponse(res,mimetype=guess_type(name)[0]) #mimetype=guess_type(res)[0]
 
+@login_required(login_url='/login/go/')
 def download_file(request, path):
 		# Serving GridFS files through Django is inefficient and
 		# insecure. NEVER USE IN PRODUCTION!
@@ -125,6 +128,7 @@ def download_file(request, path):
 		else:
 			return HttpResponse(gridfile,mimetype=guess_type(path)[0]) 
 
+@login_required(login_url='/login/go/')
 def delete_file(request, path):
 		# Serving GridFS files through Django is inefficient and
 		# insecure. NEVER USE IN PRODUCTION!
@@ -139,7 +143,7 @@ def delete_file(request, path):
 		else:
 			return HttpResponseRedirect(reverse('file_uploading'))
 
-
+@login_required(login_url='/login/go/')
 def serve_files_list(request, *kwargs):
 	usersession = request.session['name']
 	if request.method == 'POST':
@@ -177,6 +181,7 @@ def serve_files_list(request, *kwargs):
 		context_instance=RequestContext(request)
 	)
 
+@login_required(login_url='/login/go/')
 def clear_temp_dir(request,path):
 	TEMP_DIR = os.path.join(PROJECT_DIR,'temp/')
 
@@ -189,6 +194,7 @@ def clear_temp_dir(request,path):
 	
 	return HttpResponse("<center><h4>Please wait...</h4></center>")
 
+@login_required(login_url='/login/go/')
 def file_properties(request,path):
 	gridfile = gridfs_storage.open(path)
 	file_type = str(gridfile.filename).split(".")[1]
@@ -216,6 +222,7 @@ def file_properties(request,path):
 		{'properties': properties},
 		context_instance=RequestContext(request)
 	)
+@login_required(login_url='/login/go/')	
 def logout(request):
 	# print 'hello'
 	logout(request)

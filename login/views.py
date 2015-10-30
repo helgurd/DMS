@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 
+from django.contrib.auth.decorators import login_required, user_passes_test
+
 
 def register(request):
 	# Like before, get the request's context.
@@ -50,7 +52,11 @@ def register(request):
 			{'user_form': user_form, 'registered': registered},
 			context)
 
-
+    # Decorator for views that checks that the user passes the given test,
+    # redirecting to the log-in page if necessary. The test should be a callable
+    # that takes the user object and returns True if the user passes.
+# this won't allow anyone to login until user is already logged in.
+@user_passes_test(lambda user: not user.username, login_url='/uploads/list/', redirect_field_name=None)
 def user_login(request):
 	# Like before, obtain the context for the user's request.
 	context = RequestContext(request)
@@ -98,10 +104,14 @@ def user_login(request):
 		# blank dictionary object...
 		return render_to_response('login/login.html', {}, context)
 
+# Decorator for views that checks that the user is logged in, redirecting
+#     to the log-in page if necessary.
+@login_required(login_url='/login/go/')	
 def success(request):
 	p = request.POST['username']
 	return HttpResponse('welcome '+p)
 
+@login_required(login_url='/login/go/')	
 def logout_session(request):
 	logout(request)
 	return HttpResponseRedirect('/')
